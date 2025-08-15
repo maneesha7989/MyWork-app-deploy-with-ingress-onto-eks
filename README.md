@@ -1,5 +1,5 @@
 # App-deploy-with-ingress-onto-eks
-Mini project - app deployment into EKS along with Ingress 
+(Mini project - app deployment into EKS along with Ingress)
 --------------------------------------------------------------------------------------------------------------------------------------
 EKS Pros:
 - Managed Control Plane: In EKS, cloud provider AWS itself takes care of managing the Kubernetes control plane components, such as the API server, controller manager, and etcd. AWS handles upgrades, patches, and ensures high availability of the control plane, so we don’t need to bother about it. 
@@ -35,6 +35,6 @@ Self-Managed Kubernetes on EC2 Instances Cons:
 
 - Lack of Automation: Self-managed Kubernetes requires more manual intervention and scripting for certain operations, which can increase the risk of human error.
 
-Project implementation:
+# Project implementation:
 ------------------------------------------------------------------------------------------------------------------------------------
 
