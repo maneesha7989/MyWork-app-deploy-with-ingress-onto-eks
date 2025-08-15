@@ -37,4 +37,53 @@ Self-Managed Kubernetes on EC2 Instances Cons:
 
 # Project implementation:
 ------------------------------------------------------------------------------------------------------------------------------------
+// Create a new cluster or use any existing EKS cluster
+// manual cluster creation command from - executing from AWS CLI
+    $  eksctl create cluster --name demo-cluster-1 --region us-east-1 --fargate
 
+// switching context to the newly created cluster
+    $  aws eks update-kubeconfig --name demo-cluster-1 --region us-east-1
+
+// creating FARGATE profile
+    $  eksctl create fargateprofile \
+        --cluster demo-cluster-1 \
+        --namespace game-2048 \
+        --region us-east-1 \
+        --name alb-sample-app
+
+// Write eksInfra.yaml - single manifest file for multiple resources
+
+// APPLY the eksInfra.yaml
+    $  kubectl apply -f eksInfra.yaml
+
+// associating OIDC provider with the cluster
+    $  eksctl utils associate-iam-oidc-providrer --cluster \
+        demo-cluster-1 --approve
+
+// Copy-paste Alb-ingress controller JSON policy and edit is as required and store in our repo
+// Download into server using command "$ curl -O <custom-JSON-policy-github-link>
+// From that policy doc, Create JSON policy inside cluster
+    $  aws iam create-policy \
+        --policy-name AWSLoadBalancerControllerIAMPolicy
+        --policy-document file://iam_policy.json 
+
+// then create new Service Account or use an existing one
+    $  eksctl create iamserviceaccount \
+        --cluster=demo-cluster-1 \
+        --namespace=kube-system \
+        --name=aws-load-balancer-controller-sa \
+        --role-name AmazonEKSLoadBalancerControllerRole \
+        --attach-policy-arn=arn:aws:iam::<my-aws-account-id>:policy/AWSLoadBalancerControllerIAMPolicy \
+        --approve
+
+// Next is to update Helm repo "eks" and install controller
+    $  helm repo update eks
+    $  helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system \
+            --set clusterName=demo-cluster-1 \
+            --set serviceAccount.create=false \
+            --set serviceAccount.name=aws-load-balancer-controller-sa \
+            --set region=us-east-1 \
+            --set vpcId=<my-vpc-id>
+
+// DNS ADDRESS is now reflecting in our Ingress
+// let's put it on browser to see the app accessible for external users
