@@ -35,3 +35,6 @@ Self-Managed Kubernetes on EC2 Instances Cons:
 
 - Lack of Automation: Self-managed Kubernetes requires more manual intervention and scripting for certain operations, which can increase the risk of human error.
 
+Project implementation:
+------------------------------------------------------------------------------------------------------------------------------------
+
