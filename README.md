@@ -98,9 +98,9 @@ Next is to update Helm repo "eks" and install controller
 
 DNS ADDRESS is now reflecting in our Ingress
 
-Let's put it on browser to see the app accessible for external users
+Executed it on browser, and that's it. App accessible for external users via internet !!
 
 <img width="302" height="194" alt="image" src="https://github.com/user-attachments/assets/ba730349-7cca-44a2-9c4c-0ad5c78d46c8" />
 
 
-
+!!  The End !!
