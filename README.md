@@ -38,6 +38,7 @@ Self-Managed Kubernetes on EC2 Instances Cons:
 # Project implementation:
 ------------------------------------------------------------------------------------------------------------------------------------
 Create a new cluster or use any existing EKS cluster
+
 Manual cluster creation command - AWS CLI
 
     $  eksctl create cluster --name demo-cluster-1 --region us-east-1 --fargate
@@ -66,7 +67,9 @@ Associating OIDC provider with the cluster
         demo-cluster-1 --approve
 
 Copy-paste Alb-ingress controller JSON policy and edit is as required and store in our repo
+
 Download into server using command "$ curl -O <custom-JSON-policy-github-link>
+
 From that policy doc, Create JSON policy inside cluster
 
     $  aws iam create-policy \
@@ -94,6 +97,7 @@ Next is to update Helm repo "eks" and install controller
             --set vpcId=<my-vpc-id>
 
 DNS ADDRESS is now reflecting in our Ingress
+
 Let's put it on browser to see the app accessible for external users
 
 <img width="302" height="194" alt="image" src="https://github.com/user-attachments/assets/ba730349-7cca-44a2-9c4c-0ad5c78d46c8" />
